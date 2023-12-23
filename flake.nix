@@ -18,8 +18,6 @@
           pkgs = nixpkgs.legacyPackages.${system};
           generated = pkgs.callPackage ./generator/templates.nix { };
         in ({
-          default = self.packages.${system}.copy-templates;
-
           copy-templates = pkgs.writeScriptBin "copy-templates" ''
             set -euxo pipefail
 
@@ -27,6 +25,7 @@
             mkdir -p ${actualizedDir}
 
             cp -rT ${generated.haskell} ${actualizedDir}/haskell
+            cp -rT ${generated.rust} ${actualizedDir}/rust
 
             chmod +w -R ${actualizedDir}
           '';
@@ -36,6 +35,10 @@
         haskell = {
           path = "${./.}/${actualizedDir}/haskell";
           description = "Haskell with package.yaml";
+        };
+        rust = {
+          path = "${./.}/${actualizedDir}/rust";
+          description = "Rust";
         };
       };
     };
