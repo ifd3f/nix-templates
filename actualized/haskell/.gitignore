@@ -1,4 +1,5 @@
-result
+dist-newstyle
+/*.cabal
 
 result
 .direnv

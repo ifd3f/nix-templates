@@ -23,9 +23,12 @@
           packages = p: [ self.packages.${system}.haskell-hello ];
           withHoogle = true;
           buildInputs = with pkgs.haskellPackages; [
-            haskell-language-server
-            ghcid
             cabal-install
+            ghcid
+            haskell-language-server
+            hpack
+            nixfmt
+            hindent
           ];
         };
       });

@@ -1,6 +1,27 @@
 dependencies:
   - base == 4.*
   - haskell-say
+
 executables:
   haskell-hello:
     main: Main.hs
+    source-dirs:
+      - src
+      - app
+
+libraries:
+  haskell-hello-lib:
+    source-dirs: src
+    exposed-modules:
+      - Lib
+
+tests:
+  haskell-hello-spec:
+    main: Spec.hs
+    source-dirs:
+      - src
+      - test
+    dependencies:
+      - hspec == 2.*
+    build-tools: hspec-discover
+
