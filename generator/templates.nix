@@ -42,4 +42,9 @@ in {
     name = "rust";
     src = ./rust;
   };
+
+  python = makeTemplate {
+    name = "rust";
+    src = ./rust;
+  };
 }

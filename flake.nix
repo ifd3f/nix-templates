@@ -26,6 +26,7 @@
 
             cp -rT ${generated.haskell} ${actualizedDir}/haskell
             cp -rT ${generated.rust} ${actualizedDir}/rust
+            cp -rT ${generated.python} ${actualizedDir}/python
 
             chmod +w -R ${actualizedDir}
           '';
@@ -36,9 +37,25 @@
           path = "${./.}/${actualizedDir}/haskell";
           description = "Haskell with package.yaml";
         };
+
         rust = {
           path = "${./.}/${actualizedDir}/rust";
           description = "Rust";
+          welcomeText = ''
+            To initialize the Rust template, run the following command in the root dir:
+
+            $ nix run nixpkgs#cargo -- init
+          '';
+        };
+
+        python = {
+          path = "${./.}/${actualizedDir}/python";
+          description = "Python";
+          welcomeText = ''
+            To initialize the Python template, run the following command in the root dir:
+
+            $ nix run nixpkgs#poetry -- init
+          '';
         };
       };
     };
