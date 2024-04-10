@@ -1,19 +1,16 @@
+name: my-package-name
+
 dependencies:
   - base == 4.*
+  - containers
   - haskell-say
 
 executables:
-  haskell-hello:
+  my-package-name:
     main: Main.hs
     source-dirs:
       - src
       - app
-
-libraries:
-  haskell-hello-lib:
-    source-dirs: src
-    exposed-modules:
-      - Lib
 
 tests:
   haskell-hello-spec:
