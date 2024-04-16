@@ -1,22 +1,25 @@
 {
   inputs = {
-    naersk.url = "github:nix-community/naersk/master";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils, naersk, ... }:
+  outputs = { self, nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-        naersk-lib = pkgs.callPackage naersk { };
+      let pkgs = nixpkgs.legacyPackages.${system};
       in {
-        packages.default = naersk-lib.buildPackage ./.;
-        devShells.default = with pkgs;
-          mkShell {
-            buildInputs =
-              [ cargo rustc rustfmt pre-commit rustPackages.clippy ];
-            RUST_SRC_PATH = rustPlatform.rustLibSrc;
+        packages = {
+          default = self.packages.${system}.my-poetry-app;
+          my-poetry-app = pkgs.${system}.poetry2nix.mkPoetryApplication {
+            projectDir = self;
           };
+        };
+
+        devShells.default = pkgs.${system}.mkShellNoCC {
+          packages = with pkgs.${system}; [
+            (poetry2nix.mkPoetryEnv { projectDir = self; })
+            poetry
+          ];
+        };
       });
 }

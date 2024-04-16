@@ -39,12 +39,12 @@ in {
   };
 
   rust = makeTemplate {
-    name = "rust";
+    name = "rust-template";
     src = ./rust;
   };
 
   python = makeTemplate {
-    name = "rust";
-    src = ./rust;
+    name = "python-template";
+    src = ./python;
   };
 }
